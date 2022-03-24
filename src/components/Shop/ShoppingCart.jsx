@@ -7,9 +7,9 @@ export default function ShoppingCart({ orderedItems, clearCartHandler }) {
     console.log(orderedItems);
 
     function totalCal(properties) {
-        // if (properties === 'price') {
-        //     return orderedItems.reduce((acc, item) => acc += item?.total(), 0)
-        // }
+        if (properties === 'price') {
+            return orderedItems.reduce((acc, item) => acc += item?.total(), 0)
+        }
         return orderedItems.reduce((acc, item) => acc += item[properties], 0)
     }
 

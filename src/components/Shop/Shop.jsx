@@ -20,8 +20,12 @@ export default function Shop() {
         if (typeof window !== 'undefined') {
             // setOrderedItems()
             const localStoreCollection = JSON.parse(localStorage.getItem('productKey'))
-            const localStoreKeys = localStoreCollection?.map(item => Object.keys(item))?.flat()
+            const localStoreKeys = localStoreCollection?.map(item => Object?.keys(item))?.flat()
             const localData = data?.filter(item => localStoreKeys?.includes(item.id))
+            localStoreCollection?.map((localItem) => {
+                const [key, value] = Object.entries(localItem)[0];
+                return localData?.map(item => item.id === key ? ({ ...item, ...(item.quantity = value, item.total = function () { return this.price * this.quantity }) }) : item)
+            })
             setOrderedItems(localData)
         }
 
@@ -43,7 +47,7 @@ export default function Shop() {
         if (!!orderedItems.find(fProduct => fProduct.id === item.id)) {
             setOrderedItems(prev => prev.map(product => product.id === item.id ? { ...product, ...(++product.quantity) } : product))
         } else {
-            setOrderedItems(prev => [...prev, { ...item, ...(++item.quantity, item.total = function(){ return this.price * this.quantity})}])
+            setOrderedItems(prev => [...prev, { ...item, ...(++item.quantity, item.total = function () { return this.price * this.quantity }) }])
 
         }
 
