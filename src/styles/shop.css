@@ -1,0 +1,8 @@
+.shoppingCart {
+    position: fixed;
+    width: 18rem;
+    height: 60vh;
+    right: 0;
+    z-index: 2;
+    top: 18vh;
+}
