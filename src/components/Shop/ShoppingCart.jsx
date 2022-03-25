@@ -2,7 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Card, ListGroup } from 'react-bootstrap';
 
-export default function ShoppingCart({ orderedItems, clearCartHandler }) {
+export default function ShoppingCart({ orderedItems, clearCartHandler}) {
+
+ 
     
 
     function totalCal(properties) {

@@ -6,6 +6,7 @@ import { addToLocalStore, removeFromLocalStore } from '../../utilities/localStor
 export default function ShopItem({ item, addItemHandler, removeItemHandler }) {
     const [count, setCount] = useState(0);
 
+
     const { id, category, name, seller, price, stock, ratings,quantity, ratingsCount, img, shipping } = item
     
 

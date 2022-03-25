@@ -11,7 +11,6 @@ export default function Shop() {
         item.quantity += quantity
         item.total = function () { return this.price * this.quantity }
         setOrderedItems(prev => [...prev, { ...item }])
-
     }
 
 
@@ -28,7 +27,6 @@ export default function Shop() {
                 const localData = data?.filter(item => item.id === id)
                 localData.map(item=>updatingProducts(item,localStoreCollection[id]))
             }
-         
         }
 
     }, [data])
@@ -56,7 +54,7 @@ export default function Shop() {
     return (
         <div style={{ position: 'relative' }}>
             <ShopItems addItemHandler={addItemHandler} removeItemHandler={removeItemHandler} data={data} />
-            <ShoppingCart orderedItems={orderedItems} clearCartHandler={clearCartHandler} />
+            <ShoppingCart orderedItems={orderedItems} clearCartHandler={clearCartHandler}/>
         </div>
     )
 }
