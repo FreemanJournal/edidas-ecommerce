@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Card, ListGroup } from 'react-bootstrap'
+import React, { useState } from 'react';
 import ReactStarsRating from 'react-awesome-stars-rating';
+import { Button, Card, ListGroup } from 'react-bootstrap';
 import { addToLocalStore, removeFromLocalStore } from '../../utilities/localStorage/localStorage';
 
 export default function ShopItem({ item, addItemHandler, removeItemHandler }) {
     const [count, setCount] = useState(0);
-    const { id, category, name, seller, price, stock, ratings, ratingsCount, img, shipping } = item
+
+    const { id, category, name, seller, price, stock, ratings,quantity, ratingsCount, img, shipping } = item
+    
 
     const onRatingChange = (value) => {
         // console.log(`React Stars Rating value is ${value}`);
@@ -18,9 +20,11 @@ export default function ShopItem({ item, addItemHandler, removeItemHandler }) {
     }
     function removeItemFromCart(item) {
         setCount(prev => --prev)
-        removeItemHandler(item)
+        removeItemHandler(id)
         removeFromLocalStore(id)
     }
+
+    
 
     return (
         <Card className="p-3" key={id}>
@@ -33,10 +37,6 @@ export default function ShopItem({ item, addItemHandler, removeItemHandler }) {
                     <ListGroup.Item>Rating : <ReactStarsRating onChange={onRatingChange} value={ratings} /></ListGroup.Item>
                     <ListGroup.Item>Rating Count : {ratingsCount}</ListGroup.Item>
                 </ListGroup>
-
-
-
-
             </Card.Body>
             <Button variant="warning" className='mb-3' onClick={() => addItemToCart(item)}>Add to cart</Button>
 

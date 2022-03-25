@@ -6,8 +6,13 @@ export default function Shop() {
     const [data, setData] = useState([]);
     const [orderedItems, setOrderedItems] = useState([]);
 
-    // console.log(orderedItems);
+  
+    function updatingProducts(item, quantity) {
+        item.quantity += quantity
+        item.total = function () { return this.price * this.quantity }
+        setOrderedItems(prev => [...prev, { ...item }])
 
+    }
 
 
     useEffect(() => {
@@ -18,15 +23,12 @@ export default function Shop() {
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            // setOrderedItems()
             const localStoreCollection = JSON.parse(localStorage.getItem('productKey'))
-            const localStoreKeys = localStoreCollection?.map(item => Object?.keys(item))?.flat()
-            const localData = data?.filter(item => localStoreKeys?.includes(item.id))
-            localStoreCollection?.map((localItem) => {
-                const [key, value] = Object.entries(localItem)[0];
-                return localData?.map(item => item.id === key ? ({ ...item, ...(item.quantity = value, item.total = function () { return this.price * this.quantity }) }) : item)
-            })
-            setOrderedItems(localData)
+            for (const id in localStoreCollection) {
+                const localData = data?.filter(item => item.id === id)
+                localData.map(item=>updatingProducts(item,localStoreCollection[id]))
+            }
+         
         }
 
     }, [data])
@@ -34,32 +36,17 @@ export default function Shop() {
 
 
 
-    // useEffect(() => {
-    //     if (typeof window !== 'undefined') {
-    //         localStorage.setItem('orderItems', JSON.stringify(orderedItems))
-    //     }
-    // }, [orderedItems])
-
-
-
     function addItemHandler(item) {
 
         if (!!orderedItems.find(fProduct => fProduct.id === item.id)) {
-            setOrderedItems(prev => prev.map(product => product.id === item.id ? { ...product, ...(++product.quantity) } : product))
+            setOrderedItems(prev => prev.map(pro => pro.id === item.id ? { ...pro, ...(pro.quantity += 1) } : pro))
         } else {
-            setOrderedItems(prev => [...prev, { ...item, ...(++item.quantity, item.total = function () { return this.price * this.quantity }) }])
-
+            updatingProducts(item,1)
         }
-
-
     }
 
-    function removeItemHandler(item) {
-        const clickedItemIndex = orderedItems.indexOf(item)
-        if (clickedItemIndex !== -1) {
-            orderedItems.splice(clickedItemIndex, 1)
-            setOrderedItems([...orderedItems])
-        }
+    function removeItemHandler(id) {
+        setOrderedItems(prev => prev.map(item => item.id === id ? prev.splice(prev.indexOf(item), 1) : item))
     }
     function clearCartHandler() {
         setOrderedItems([])
