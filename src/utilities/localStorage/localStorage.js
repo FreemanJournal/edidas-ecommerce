@@ -1,23 +1,17 @@
-function setLocalItems(setArray) {
-    return localStorage.setItem('productKey', JSON.stringify(setArray))
+function setLocalItems(setObject) {
+    return localStorage.setItem('productKey', JSON.stringify(setObject))
 }
 
 function addToLocalStore(id) {
     if (typeof window !== 'undefined') {
-        let localProductCart = {}
-        const storeCart = localStorage.getItem('productKey')
-
-        if (storeCart) {
-            localProductCart = JSON.parse(storeCart)
-        }
-        const quantity = localProductCart[id]
+        const storeCart = JSON.parse(localStorage.getItem('productKey')) || {}
+        const quantity = storeCart[id]
         if (quantity) {
-            const newQuantity = quantity + 1
-            localProductCart[id] = newQuantity
+            ++storeCart[id]
         } else {
-            localProductCart[id] = 1
+            storeCart[id] = 1
         }
-        setLocalItems(localProductCart)
+        setLocalItems(storeCart)
     }
 
 }

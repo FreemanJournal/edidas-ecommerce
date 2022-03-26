@@ -1,11 +1,9 @@
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Button, Card, ListGroup } from 'react-bootstrap';
 
 export default function ShoppingCart({ orderedItems, clearCartHandler}) {
 
- 
-    
 
     function totalCal(properties) {
         if (properties === 'price') {

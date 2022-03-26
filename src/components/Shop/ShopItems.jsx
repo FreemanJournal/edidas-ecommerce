@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ShopItem from './ShopItem';
 
 export default function ShopItems({ addItemHandler, removeItemHandler,data }) {
