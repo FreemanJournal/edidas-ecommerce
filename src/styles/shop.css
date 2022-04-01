@@ -1,8 +1,55 @@
+
+
+/* html {
+    overflow: scroll;
+    overflow-x: hidden;
+} */
+::-webkit-scrollbar {
+    /* Remove scrollbar space */
+    /* width: 20px;   */
+    /* Optional: just make scrollbar invisible */
+    /* background: white;   */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    /* background: black; */
+}
+
+::-webkit-scrollbar {
+    width: .5em;
+}
+ 
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+ 
+::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
+.navLink{
+    text-decoration: none;
+    padding: 0 2em;
+    color: whitesmoke;
+}
+.navLink:hover{
+   
+    color: yellow;
+}
 .shoppingCart {
     position: fixed;
-    width: 18rem;
-    height: 65vh;
+    width: 20rem;
+    height: 80vh;
     right: 0;
     z-index: 2;
     top: 18vh;
+}
+.singleOrder{
+    border: 3px solid transparent!important;
+    transition: all 300ms;
+}
+.singleOrder:hover{
+    border: 3px solid gray!important;
 }

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import ReactStarsRating from 'react-awesome-stars-rating';
 import { Button, Card, ListGroup } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
 import { addToLocalStore, removeFromLocalStore } from '../../utilities/localStorage/localStorage';
 
 export default function ShopItem({ item, addItemHandler, removeItemHandler }) {
     const [count, setCount] = useState(0);
-
+    let navigate = useNavigate()
 
     const { id, category, name, seller, price, stock, ratings,quantity, ratingsCount, img, shipping } = item
     
@@ -25,6 +26,11 @@ export default function ShopItem({ item, addItemHandler, removeItemHandler }) {
         removeFromLocalStore(id)
     }
 
+    function loadDetailsHandler(){
+        navigate(`/order-preview/${id}`)
+
+    }
+
     
 
     return (
@@ -39,9 +45,12 @@ export default function ShopItem({ item, addItemHandler, removeItemHandler }) {
                     <ListGroup.Item>Rating Count : {ratingsCount}</ListGroup.Item>
                 </ListGroup>
             </Card.Body>
-            <Button variant="warning" className='mb-3' onClick={() => addItemToCart(item)}>Add to cart</Button>
 
-            <Button variant="danger" disabled={count === 0 ? true : false} onClick={() => removeItemFromCart(item)}>Remove from  cart</Button>
+            <Button variant="warning" className='mb-3' onClick={() => addItemToCart(item)}>Add to cart</Button>
+            <Button variant="danger" className='mb-3' disabled={count === 0 ? true : false} onClick={() => removeItemFromCart(item)}>Remove from  cart</Button>
+            <Button variant="success" className='mb-3' onClick={loadDetailsHandler}>Details</Button>
+           
+           
         </Card>
     )
 }

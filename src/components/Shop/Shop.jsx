@@ -1,45 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { Button } from 'react-bootstrap';
+import { FaAngleRight } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
+import useProducts from '../../hooks/useProducts';
 import { removeLocalStore } from '../../utilities/localStorage/localStorage';
+import ShoppingCart from '../ShoppingCart/ShoppingCart';
 import ShopItems from './ShopItems';
-import ShoppingCart from './ShoppingCart';
+
 export default function Shop() {
-    const [data, setData] = useState([]);
-    const [orderedItems, setOrderedItems] = useState([]);
-
-  
-    function updatingProducts(item, quantity) {
-        item.quantity += quantity
-        item.total = function () { return this.price * this.quantity }
-        setOrderedItems(prev => [...prev, { ...item }])
-    }
-
-
-    useEffect(() => {
-        fetch('/fakeData/products.json')
-            .then(response => response.json())
-            .then(data => setData(data))
-    }, [])
-
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const localStoreCollection = JSON.parse(localStorage.getItem('productKey'))
-            for (const id in localStoreCollection) {
-                const localData = data?.filter(item => item.id === id)
-                localData.map(item=>updatingProducts(item,localStoreCollection[id]))
-            }
-        }
-
-    }, [data])
-
-
-
+    const [orderedItems, setOrderedItems, updatingProducts, data] = useProducts()
+    // const [addItemHandler,removeItemHandler,clearCartHandler] = useItemHandler(orderedItems,setOrderedItems,updatingProducts)
+    let navigate = useNavigate()
 
     function addItemHandler(item) {
 
         if (!!orderedItems.find(fProduct => fProduct.id === item.id)) {
             setOrderedItems(prev => prev.map(pro => pro.id === item.id ? { ...pro, ...(pro.quantity += 1) } : pro))
         } else {
-            updatingProducts(item,1)
+            updatingProducts(item, 1)
         }
     }
 
@@ -54,7 +32,9 @@ export default function Shop() {
     return (
         <div style={{ position: 'relative' }}>
             <ShopItems addItemHandler={addItemHandler} removeItemHandler={removeItemHandler} data={data} />
-            <ShoppingCart orderedItems={orderedItems} clearCartHandler={clearCartHandler}/>
+            <ShoppingCart orderedItems={orderedItems} clearCartHandler={clearCartHandler}>
+                <Button variant="success" onClick={() => navigate('/order-preview')}>Order Preview <FaAngleRight/></Button>
+            </ShoppingCart>
         </div>
     )
 }

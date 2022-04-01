@@ -1,11 +1,12 @@
 import React from 'react'
 import { Container, Nav, Navbar } from 'react-bootstrap'
+import { Link, NavLink, Outlet } from 'react-router-dom'
 
 export default function Header() {
-    
+
+    const activeStyle = ({ isActive }) => { return { color: isActive ? "yellow" : "" } }
     return (
         <>
-           
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                 <Container>
                     <Navbar.Brand href="#home">
@@ -15,15 +16,18 @@ export default function Header() {
                             width="300"
                             height="30"
                             className="d-inline-block align-top"
-                        />{' '}
+                        />
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav" className='justify-content-end'>
                         <Nav className=''>
-                            <Nav.Link href="#home">Order</Nav.Link>
-                            <Nav.Link href="#features">Order Review</Nav.Link>
-                            <Nav.Link href="#pricing">Manage Inventory</Nav.Link>
+                            <NavLink style={activeStyle} className='navLink' to="/">Home</NavLink>
+                            <NavLink style={activeStyle} className='navLink' to="/order-preview">Order Preview</NavLink>
+                            <NavLink style={activeStyle} className='navLink' to="/manage-inventory">Manage Inventory</NavLink>
+
+                            {/* <Nav.Link href="#pricing">Manage Inventory</Nav.Link> */}
                         </Nav>
+
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

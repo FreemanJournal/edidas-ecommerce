@@ -1,9 +1,9 @@
 
 import React from 'react';
 import { Button, Card, ListGroup } from 'react-bootstrap';
+import { FaTrash } from "react-icons/fa";
 
-export default function ShoppingCart({ orderedItems, clearCartHandler}) {
-
+export default function ShoppingCart({orderedItems,children,clearCartHandler}) {
 
     function totalCal(properties) {
         if (properties === 'price') {
@@ -31,8 +31,11 @@ export default function ShoppingCart({ orderedItems, clearCartHandler}) {
                         <ListGroup.Item className='fw-bolder list-group-item-warning'>You have to pay : $ {(totalCal('price') + DELIVERY_CHARGE + TAX).toFixed(0)}</ListGroup.Item>
                     </ListGroup>
                 </Card.Body>
-                <Button variant="warning" className='mb-3' onClick={clearCartHandler}>Clear cart</Button>
-                <Button variant="success" >Order review</Button>
+
+                {children}
+
+                <Button variant="warning" className='mt-3' onClick={clearCartHandler}>Clear cart <FaTrash className='ms-1 text-danger' style={{fontSize:"13px"}}/></Button>
+                
             </Card>
         </div>
     )

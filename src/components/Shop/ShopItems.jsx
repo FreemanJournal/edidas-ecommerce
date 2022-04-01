@@ -1,4 +1,5 @@
 import React from 'react';
+import useItemHandler from '../../hooks/useItemHandler';
 import ShopItem from './ShopItem';
 
 export default function ShopItems({ addItemHandler, removeItemHandler,data }) {
