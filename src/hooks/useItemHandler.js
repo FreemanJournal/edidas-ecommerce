@@ -9,15 +9,15 @@ export default function useItemHandler({orderedItems,setOrderedItems,updatingPro
 
     function addItemHandler(item) {
 
-        if (!!orderedItems.find(fProduct => fProduct.id === item.id)) {
-            setOrderedItems(prev => prev.map(pro => pro.id === item.id ? { ...pro, ...(pro.quantity += 1) } : pro))
+        if (!!orderedItems.find(fProduct => fProduct._id === item._id)) {
+            setOrderedItems(prev => prev.map(pro => pro._id === item._id ? { ...pro, ...(pro.quantity += 1) } : pro))
         } else {
             updatingProducts(item,1)
         }
     }
 
     function removeItemHandler(id) {
-        setOrderedItems(prev => prev.map(item => item.id === id ? prev.splice(prev.indexOf(item), 1) : item))
+        setOrderedItems(prev => prev.map(item => item._id === id ? prev.splice(prev.indexOf(item), 1) : item))
     }
     function clearCartHandler() {
         setOrderedItems([])

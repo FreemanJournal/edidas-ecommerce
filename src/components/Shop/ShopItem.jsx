@@ -8,7 +8,8 @@ export default function ShopItem({ item, addItemHandler, removeItemHandler }) {
     const [count, setCount] = useState(0);
     let navigate = useNavigate()
 
-    const { id, category, name, seller, price, stock, ratings,quantity, ratingsCount, img, shipping } = item
+    const {  _id, category, name, seller, price, stock, ratings,quantity, ratingsCount, img, shipping } = item
+    
     
 
     const onRatingChange = (value) => {
@@ -18,23 +19,23 @@ export default function ShopItem({ item, addItemHandler, removeItemHandler }) {
     function addItemToCart(item) {
         setCount(prev => ++prev)
         addItemHandler(item)
-        addToLocalStore(id)
+        addToLocalStore(_id)
     }
-    function removeItemFromCart(item) {
+    function removeItemFromCart() {
         setCount(prev => --prev)
-        removeItemHandler(id)
-        removeFromLocalStore(id)
+        removeItemHandler(_id)
+        removeFromLocalStore(_id)
     }
 
     function loadDetailsHandler(){
-        navigate(`/order-preview/${id}`)
+        navigate(`/order-preview/${_id}`)
 
     }
 
     
 
     return (
-        <Card className="p-3" key={id}>
+        <Card className="p-3" key={_id}>
             <Card.Img variant="top" src={img} style={{ userSelect: "none" }} />
             <Card.Body style={{ userSelect: "none" }}>
                 <Card.Title>{name}</Card.Title>
@@ -47,7 +48,7 @@ export default function ShopItem({ item, addItemHandler, removeItemHandler }) {
             </Card.Body>
 
             <Button variant="warning" className='mb-3' onClick={() => addItemToCart(item)}>Add to cart</Button>
-            <Button variant="danger" className='mb-3' disabled={count === 0 ? true : false} onClick={() => removeItemFromCart(item)}>Remove from  cart</Button>
+            <Button variant="danger" className='mb-3' disabled={count === 0 ? true : false} onClick={() => removeItemFromCart()}>Remove from  cart</Button>
             <Button variant="success" className='mb-3' onClick={loadDetailsHandler}>Details</Button>
            
            
